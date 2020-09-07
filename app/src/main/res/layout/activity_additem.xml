@@ -34,9 +34,16 @@
             android:layout_weight="1"
             android:background="@null"
             android:gravity="right"
-            android:hint="0₽"
+            android:hint="0"
             android:inputType="number"
             android:maxLines="1" />
+
+        <EditText
+            android:id="@+id/ruble"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/ruble" />
 
         <Button
             android:enabled="false"

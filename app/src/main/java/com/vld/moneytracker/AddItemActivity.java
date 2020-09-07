@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -14,12 +13,10 @@ public class AddItemActivity extends AppCompatActivity {
 
     private EditText name;
     private EditText price;
+    private EditText ruble;
     private Button addButton;
 
     private TextWatcher textWatcher;
-
-    private boolean nameEnabled = false;
-    private boolean priceEnabled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +27,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         name = findViewById(R.id.name);
         price = findViewById(R.id.price);
+        ruble = findViewById(R.id.ruble);
         addButton = findViewById(R.id.add_button);
 
         textWatcher = new TextWatcher() {
@@ -49,6 +47,12 @@ public class AddItemActivity extends AppCompatActivity {
                     addButton.setEnabled(true);
                 } else {
                     addButton.setEnabled(false);
+                }
+
+                if(price.getText().length() != 0){
+                    ruble.setText(R.string.ruble);
+                } else {
+                    ruble.setText("");
                 }
             }
         };
