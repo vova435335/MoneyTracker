@@ -16,8 +16,6 @@ public class AddItemActivity extends AppCompatActivity {
     private EditText ruble;
     private Button addButton;
 
-    private TextWatcher textWatcher;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +28,7 @@ public class AddItemActivity extends AppCompatActivity {
         ruble = findViewById(R.id.ruble);
         addButton = findViewById(R.id.add_button);
 
-        textWatcher = new TextWatcher() {
+        TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -43,13 +41,13 @@ public class AddItemActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(name.getText().length() != 0 && price.getText().length() != 0){
+                if (name.getText().length() != 0 && price.getText().length() != 0) {
                     addButton.setEnabled(true);
                 } else {
                     addButton.setEnabled(false);
                 }
 
-                if(price.getText().length() != 0){
+                if (price.getText().length() != 0) {
                     ruble.setText(R.string.ruble);
                 } else {
                     ruble.setText("");
