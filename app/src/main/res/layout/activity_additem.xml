@@ -1,15 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_pattern"
+    android:orientation="vertical"
     tools:context=".AddItemActivity">
 
-    <View
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="#FF0000"
-        android:text="Add Item" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="22dp"
+        android:paddingRight="22dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="Название"
+            android:inputType="text"
+            android:maxLines="1" />
+
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right"
+            android:hint="0₽"
+            android:inputType="number"
+            android:maxLines="1" />
+
+        <Button
+            android:enabled="false"
+            android:id="@+id/add_button"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="22dp"
+            android:background="@drawable/ic_add" />
+    </LinearLayout>
+
+
+</LinearLayout>
