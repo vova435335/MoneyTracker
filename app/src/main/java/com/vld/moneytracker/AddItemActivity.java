@@ -21,8 +21,6 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_additem);
 
-        setTitle(R.string.add_item_title);
-
         name = findViewById(R.id.name);
         price = findViewById(R.id.price);
         ruble = findViewById(R.id.ruble);
@@ -41,14 +39,12 @@ public class AddItemActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (name.getText().length() != 0 && price.getText().length() != 0) {
-                    addButton.setEnabled(true);
-                } else {
-                    addButton.setEnabled(false);
-                }
+                addButton.setEnabled(
+                        name.getText().length() != 0 && price.getText().length() != 0
+                );
 
                 if (price.getText().length() != 0) {
-                    ruble.setText(R.string.ruble);
+                    ruble.setText(R.string.currency_rur);
                 } else {
                     ruble.setText("");
                 }

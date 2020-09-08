@@ -40,18 +40,20 @@
 
         <EditText
             android:id="@+id/ruble"
-            android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/ruble" />
+            android:background="@null"
+            android:hint="@string/currency_rur" />
 
         <Button
-            android:enabled="false"
             android:id="@+id/add_button"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_marginStart="22dp"
-            android:background="@drawable/ic_add" />
+            android:background="@drawable/ic_add"
+            android:enabled="false" />
+
+
     </LinearLayout>
 
 
