@@ -14,11 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemsFragment extends Fragment {
 
-    private static final int TYPE_UNKNOWN = -1;
+    public static final int TYPE_UNKNOWN = -1;
     public static final int TYPE_INCOMES = 1;
     public static final int TYPE_EXPENSES = 2;
+    public static final int TYPE_BALANCE = 3;
 
     public static final String TYPE_KEY = "type";
+
+    public static ItemsFragment createItemsFragment(int type){
+        Bundle bundle = new Bundle();
+        bundle.putInt(ItemsFragment.TYPE_KEY, ItemsFragment.TYPE_INCOMES);
+
+        ItemsFragment fragment = new ItemsFragment();
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
 
     private int type;
 

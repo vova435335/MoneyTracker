@@ -1,6 +1,6 @@
 package com.vld.moneytracker;
 
-import android.os.Bundle;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,47 +10,47 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class MainPagesAdapter extends FragmentPagerAdapter {
 
-    public MainPagesAdapter(@NonNull FragmentManager fm) {
+    private static final int PAGE_INCOMES = 0;
+    private static final int PAGE_EXPENSES = 1;
+    private static final int PAGE_BALANCE = 2;
+
+    private String titles[];
+
+    public MainPagesAdapter(@NonNull FragmentManager fm, Context context) {
         super(fm);
+
+        titles = context.getResources().getStringArray(R.array.tab_titles);
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
-            Bundle bundle = new Bundle();
-            bundle.putInt(ItemsFragment.TYPE_KEY, ItemsFragment.TYPE_INCOMES);
 
-            Fragment fragment = new ItemsFragment();
-            fragment.setArguments(bundle);
+        switch (position) {
+            case PAGE_INCOMES:
+                return ItemsFragment.createItemsFragment(ItemsFragment.TYPE_INCOMES);
 
-            return fragment;
-        } else if (position == 1) {
-            Bundle bundle = new Bundle();
-            bundle.putInt(ItemsFragment.TYPE_KEY, ItemsFragment.TYPE_EXPENSES);
 
-            Fragment fragment = new ItemsFragment();
-            fragment.setArguments(bundle);
+            case PAGE_EXPENSES:
+                return ItemsFragment.createItemsFragment(ItemsFragment.TYPE_EXPENSES);
 
-            return fragment;
 
+            case PAGE_BALANCE:
+                return BalanceFragment.createBalanceFragment(ItemsFragment.TYPE_BALANCE);
+
+            default:
+                return null;
         }
-        return null;
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        if (position == 0) {
-            return "Доходы";
-        } else if (position == 1) {
-            return "Расходы";
-        }
-        return null;
+        return titles[position];
     }
 }
