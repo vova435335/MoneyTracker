@@ -1,12 +1,12 @@
 package com.vld.moneytracker;
 
-public class Record {
+public class Item {
 
     private final String title;
     private final int price;
     private String comment;
 
-    public Record(String title, int price) {
+    public Item(String title, int price) {
         this.title = title;
         this.price = price;
     }
