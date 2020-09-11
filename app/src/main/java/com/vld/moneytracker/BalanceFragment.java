@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment;
 
 public class BalanceFragment extends Fragment {
 
-    private int type;
+    private String type;
 
-    public static BalanceFragment createBalanceFragment(int type){
+    public static BalanceFragment createBalanceFragment(String type){
         Bundle bundle = new Bundle();
-        bundle.putInt(ItemsFragment.TYPE_KEY, ItemsFragment.TYPE_INCOMES);
+        bundle.putString(ItemsFragment.TYPE_KEY, type);
 
         BalanceFragment fragment = new BalanceFragment();
         fragment.setArguments(bundle);
@@ -28,9 +28,9 @@ public class BalanceFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getArguments();
-        type = bundle.getInt(ItemsFragment.TYPE_KEY, ItemsFragment.TYPE_UNKNOWN);
+        type = bundle.getString(ItemsFragment.TYPE_KEY, Item.TYPE_BALANCE);
 
-        if (type == ItemsFragment.TYPE_UNKNOWN) {
+        if (type.equals(Item.TYPE_UNKNOWN)) {
             throw new IllegalArgumentException("Unknown type");
         }
     }

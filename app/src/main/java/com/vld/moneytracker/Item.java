@@ -2,24 +2,19 @@ package com.vld.moneytracker;
 
 public class Item {
 
-    private final String title;
-    private final int price;
-    private String comment;
+    public static final String TYPE_UNKNOWN = "unknown";
+    public static final String TYPE_INCOMES = "incomes";
+    public static final String TYPE_EXPENSES = "expenses";
+    public static final String TYPE_BALANCE = "balance";
 
-    public Item(String title, int price) {
-        this.title = title;
+    public int id;
+    public String name;
+    public int price;
+    public String type;
+
+    public Item(String name, int price, String type) {
+        this.name = name;
         this.price = price;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public String getComment() {
-        return comment;
+        this.type = type;
     }
 }
