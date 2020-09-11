@@ -10,4 +10,7 @@ public interface Api {
 
     @GET("/items")
     Call<List<Item>> getItems(@Query("type") String type);
+
+    @GET("/items/add")
+    void getItemsAdd();
 }
