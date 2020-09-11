@@ -3,7 +3,7 @@
 
     <string name="add_item_title">Новая запись</string>
     <string name="currency_rur">₽</string>
-    <string name="activity_items_list_item">Учет бюджета</string>
+    <string name="main_screen_title">Учет бюджета</string>
     
     <string name="price">%1$d₽</string>
     

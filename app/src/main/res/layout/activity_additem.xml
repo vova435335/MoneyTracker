@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context=".AddItemActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:elevation="8dp"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="68dp"
@@ -14,7 +22,8 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="22dp"
-        android:paddingRight="22dp">
+        android:paddingRight="22dp"
+        android:elevation="4dp" >
 
         <EditText
             android:id="@+id/name"
