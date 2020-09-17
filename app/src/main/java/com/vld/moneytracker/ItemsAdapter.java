@@ -15,9 +15,14 @@ class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
 
     private List<Item> data = new ArrayList<>();
 
-    public void setData(List<Item> data){
+    public void setData(List<Item> data) {
         this.data = data;
         notifyDataSetChanged();
+    }
+
+    public void addItem(Item item){
+        data.add(0, item);
+        notifyItemInserted(0);
     }
 
     @NonNull
@@ -37,48 +42,6 @@ class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
     public int getItemCount() {
         return data.size();
     }
-
-//    private void createData() {
-//        data.add(new Item("Молоко", 35));
-//        data.add(new Item("Жизнь", 1));
-//        data.add(new Item("Курсы", 50));
-//        data.add(new Item("Хлеб", 26));
-//        data.add(new Item("Тот самый ужин который я оплатил за всех потому что платил картой", 600000));
-//        data.add(new Item("", 0));
-//        data.add(new Item("Тот самый ужин", 604));
-//        data.add(new Item("Ракета Falcon Heavy", 1));
-//        data.add(new Item("Лего Тысячелетний сокол", 1000000000));
-//        data.add(new Item("Монитор", 100));
-//        data.add(new Item("MacBook Pro", 0));
-//        data.add(new Item("Шоколадка", 100));
-//        data.add(new Item("Шкаф", 100));
-//        data.add(new Item("Молоко", 35));
-//        data.add(new Item("Жизнь", 1));
-//        data.add(new Item("Курсы", 50));
-//        data.add(new Item("Хлеб", 26));
-//        data.add(new Item("Тот самый ужин который я оплатил за всех потому что платил картой", 600000));
-//        data.add(new Item("", 0));
-//        data.add(new Item("Тот самый ужин", 604));
-//        data.add(new Item("Ракета Falcon Heavy", 1));
-//        data.add(new Item("Лего Тысячелетний сокол", 1000000000));
-//        data.add(new Item("Монитор", 100));
-//        data.add(new Item("MacBook Pro", 0));
-//        data.add(new Item("Шоколадка", 100));
-//        data.add(new Item("Шкаф", 100));
-//        data.add(new Item("Молоко", 35));
-//        data.add(new Item("Жизнь", 1));
-//        data.add(new Item("Курсы", 50));
-//        data.add(new Item("Хлеб", 26));
-//        data.add(new Item("Тот самый ужин который я оплатил за всех потому что платил картой", 600000));
-//        data.add(new Item("", 0));
-//        data.add(new Item("Тот самый ужин", 604));
-//        data.add(new Item("Ракета Falcon Heavy", 1));
-//        data.add(new Item("Лего Тысячелетний сокол", 1000000000));
-//        data.add(new Item("Монитор", 100));
-//        data.add(new Item("MacBook Pro", 0));
-//        data.add(new Item("Шоколадка", 100));
-//        data.add(new Item("Шкаф", 100));
-//    }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 

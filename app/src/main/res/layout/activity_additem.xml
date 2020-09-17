@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context=".AddItemActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:elevation="8dp"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="68dp"
@@ -14,7 +22,8 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="22dp"
-        android:paddingRight="22dp">
+        android:paddingRight="22dp"
+        android:elevation="4dp" >
 
         <EditText
             android:id="@+id/name"
@@ -38,12 +47,14 @@
             android:inputType="number"
             android:maxLines="1" />
 
-        <EditText
+        <TextView
             android:id="@+id/ruble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="?android:attr/textColorHint"
             android:background="@null"
-            android:hint="@string/currency_rur" />
+            android:text="@string/currency_rur" />
 
         <Button
             android:id="@+id/add_button"

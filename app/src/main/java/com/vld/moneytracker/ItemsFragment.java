@@ -1,5 +1,9 @@
 package com.vld.moneytracker;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +33,10 @@ import retrofit2.Response;
 public class ItemsFragment extends Fragment {
 
     private static final String TAG = "ItemsFragment";
-    public static final String TYPE_KEY = "type";
+
+    private static final String TYPE_KEY = "type";
+
+    public static final int ADD_ITEM_REQUEST_COD = 123;
 
     public static ItemsFragment createItemsFragment(String type) {
         Bundle bundle = new Bundle();
@@ -41,6 +51,9 @@ public class ItemsFragment extends Fragment {
     private String type;
 
     private RecyclerView recycler;
+    private FloatingActionButton fab;
+    private SwipeRefreshLayout refresh;
+
     private ItemsAdapter adapter;
 
     private Api api;
@@ -74,6 +87,15 @@ public class ItemsFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
 
+        refresh = view.findViewById(R.id.refresh);
+        refresh.setColorSchemeColors(Color.BLUE, Color.CYAN, Color.GREEN);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadItems();
+            }
+        });
+
         loadItems();
     }
 
@@ -84,12 +106,25 @@ public class ItemsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 adapter.setData(response.body());
+                refresh.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<List<Item>> call, Throwable t) {
-
+                refresh.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == ADD_ITEM_REQUEST_COD && resultCode == Activity.RESULT_OK) {
+            Item item = data.getParcelableExtra("item");
+            if (item.type.equals(type)) {
+                adapter.addItem(item);
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

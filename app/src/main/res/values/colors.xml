@@ -5,6 +5,8 @@
     <color name="colorAccent">#1ca498</color>
 
     <color name="colorPrimaryBright">#3ab7ae</color>
+
+    <color name="colorHint">?android:attr/textColorHint</color>
     
     <color name="colorShadow">#30303030</color>
     <color name="colorItem">#fcc31e</color>
