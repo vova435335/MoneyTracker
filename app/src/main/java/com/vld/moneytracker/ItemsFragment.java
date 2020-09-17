@@ -1,5 +1,6 @@
 package com.vld.moneytracker;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -32,7 +33,10 @@ import retrofit2.Response;
 public class ItemsFragment extends Fragment {
 
     private static final String TAG = "ItemsFragment";
-    public static final String TYPE_KEY = "type";
+
+    private static final String TYPE_KEY = "type";
+
+    public static final int ADD_ITEM_REQUEST_COD = 123;
 
     public static ItemsFragment createItemsFragment(String type) {
         Bundle bundle = new Bundle();
@@ -83,15 +87,6 @@ public class ItemsFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
 
-        fab = view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), AddItemActivity.class);
-                startActivity(intent);
-            }
-        });
-
         refresh = view.findViewById(R.id.refresh);
         refresh.setColorSchemeColors(Color.BLUE, Color.CYAN, Color.GREEN);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -119,5 +114,17 @@ public class ItemsFragment extends Fragment {
                 refresh.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == ADD_ITEM_REQUEST_COD && resultCode == Activity.RESULT_OK) {
+            Item item = data.getParcelableExtra("item");
+            if (item.type.equals(type)) {
+                adapter.addItem(item);
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

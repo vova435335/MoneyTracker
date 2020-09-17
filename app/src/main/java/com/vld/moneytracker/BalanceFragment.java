@@ -15,7 +15,7 @@ public class BalanceFragment extends Fragment {
 
     public static BalanceFragment createBalanceFragment(String type){
         Bundle bundle = new Bundle();
-        bundle.putString(ItemsFragment.TYPE_KEY, type);
+        bundle.putString(AddItemActivity.TYPE_KEY, type);
 
         BalanceFragment fragment = new BalanceFragment();
         fragment.setArguments(bundle);
@@ -28,7 +28,7 @@ public class BalanceFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getArguments();
-        type = bundle.getString(ItemsFragment.TYPE_KEY, Item.TYPE_BALANCE);
+        type = bundle.getString(AddItemActivity.TYPE_KEY, Item.TYPE_BALANCE);
 
         if (type.equals(Item.TYPE_UNKNOWN)) {
             throw new IllegalArgumentException("Unknown type");
