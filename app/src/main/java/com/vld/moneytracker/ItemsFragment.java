@@ -1,28 +1,28 @@
 package com.vld.moneytracker;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
+
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -51,7 +51,6 @@ public class ItemsFragment extends Fragment {
     private String type;
 
     private RecyclerView recycler;
-    private FloatingActionButton fab;
     private SwipeRefreshLayout refresh;
 
     private ItemsAdapter adapter;
@@ -63,6 +62,7 @@ public class ItemsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         adapter = new ItemsAdapter();
+        adapter.setListener(new AdapterListener());
 
         Bundle bundle = getArguments();
         type = bundle.getString(TYPE_KEY, Item.TYPE_EXPENSES);
@@ -86,6 +86,7 @@ public class ItemsFragment extends Fragment {
         recycler = view.findViewById(R.id.list);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.setAdapter(adapter);
+
 
         refresh = view.findViewById(R.id.refresh);
         refresh.setColorSchemeColors(Color.BLUE, Color.CYAN, Color.GREEN);
@@ -127,4 +128,80 @@ public class ItemsFragment extends Fragment {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    /*   ACTION MODE   */
+
+    private ActionMode actionMode = null;
+
+    void removeSelectedItems() {
+        for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i--) {
+            adapter.remove(adapter.getSelectedItems().get(i));
+        }
+        actionMode.finish();
+    }
+
+    private class AdapterListener implements ItemsAdapterListener {
+
+        @Override
+        public void onItemClick(Item item, int position) {
+            if (isInActionMode()) {
+                toggleSelection(position);
+            }
+        }
+
+        @Override
+        public void onItemLongClick(Item item, int position) {
+            if (isInActionMode()) {
+                return;
+            }
+            actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(actionModCallback);
+            toggleSelection(position);
+        }
+
+        private boolean isInActionMode() {
+            return actionMode != null;
+        }
+
+        private void toggleSelection(int position) {
+            adapter.toggleSelection(position);
+        }
+    }
+
+    private ActionMode.Callback actionModCallback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = new MenuInflater(getContext());
+            inflater.inflate(R.menu.items_menu, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+
+            switch (item.getItemId()) {
+                case R.id.remove:
+                    showDialog();
+                    break;
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            adapter.clearSelections();
+            actionMode = null;
+        }
+    };
+
+    private void showDialog() {
+        ConfirmationDialog dialog = new ConfirmationDialog();
+        dialog.show(getFragmentManager(), "ConfirmationDialog");
+    }
+
 }
