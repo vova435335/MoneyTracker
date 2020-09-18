@@ -50,15 +50,23 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
                 if (currentPage == MainPagesAdapter.PAGE_INCOMES) {
                     type = Item.TYPE_INCOMES;
-                } else if (currentPage == MainPagesAdapter.PAGE_EXPENSES){
+                } else if (currentPage == MainPagesAdapter.PAGE_EXPENSES) {
                     type = Item.TYPE_EXPENSES;
                 }
 
-                    Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
                 intent.putExtra(AddItemActivity.TYPE_KEY, type);
                 startActivityForResult(intent, ItemsFragment.ADD_ITEM_REQUEST_COD);
             }
         });
+    }
+
+    public void setAddButtonVisible(boolean visible) {
+        if (visible) {
+            fab.show();
+        } else {
+            fab.hide();
+        }
     }
 
     @Override
@@ -85,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             case ViewPager.SCROLL_STATE_IDLE:
                 fab.setEnabled(true);
             case ViewPager.SCROLL_STATE_DRAGGING:
+
             case ViewPager.SCROLL_STATE_SETTLING:
                 fab.setEnabled(false);
                 break;
@@ -95,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        for(Fragment fragment : getSupportFragmentManager().getFragments()){
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
     }

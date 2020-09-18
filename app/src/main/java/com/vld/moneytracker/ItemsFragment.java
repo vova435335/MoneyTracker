@@ -2,6 +2,7 @@ package com.vld.moneytracker;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -167,11 +168,12 @@ public class ItemsFragment extends Fragment {
         }
     }
 
-    private ActionMode.Callback actionModCallback = new ActionMode.Callback() {
+    public ActionMode.Callback actionModCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             MenuInflater inflater = new MenuInflater(getContext());
             inflater.inflate(R.menu.items_menu, menu);
+            ((MainActivity)getActivity()).setAddButtonVisible(false);
             return true;
         }
 
@@ -196,6 +198,7 @@ public class ItemsFragment extends Fragment {
         public void onDestroyActionMode(ActionMode mode) {
             adapter.clearSelections();
             actionMode = null;
+            ((MainActivity)getActivity()).setAddButtonVisible(true);
         }
     };
 
