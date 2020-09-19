@@ -1,9 +1,12 @@
 package com.vld.moneytracker;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private FloatingActionButton fab;
+
+    private ActionMode actionMode = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +55,23 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
                 if (currentPage == MainPagesAdapter.PAGE_INCOMES) {
                     type = Item.TYPE_INCOMES;
-                } else if (currentPage == MainPagesAdapter.PAGE_EXPENSES){
+                } else if (currentPage == MainPagesAdapter.PAGE_EXPENSES) {
                     type = Item.TYPE_EXPENSES;
                 }
 
-                    Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
                 intent.putExtra(AddItemActivity.TYPE_KEY, type);
                 startActivityForResult(intent, ItemsFragment.ADD_ITEM_REQUEST_COD);
             }
         });
+    }
+
+    public void setAddButtonVisible(boolean visible) {
+        if (visible) {
+            fab.show();
+        } else {
+            fab.hide();
+        }
     }
 
     @Override
@@ -83,9 +96,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void onPageScrollStateChanged(int state) {
         switch (state) {
             case ViewPager.SCROLL_STATE_IDLE:
-                fab.setEnabled(true);
             case ViewPager.SCROLL_STATE_DRAGGING:
+                fab.setEnabled(true);
+                break;
             case ViewPager.SCROLL_STATE_SETTLING:
+                if(actionMode != null){
+                    actionMode.finish();
+                }
                 fab.setEnabled(false);
                 break;
         }
@@ -95,9 +112,23 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        for(Fragment fragment : getSupportFragmentManager().getFragments()){
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void onSupportActionModeStarted(@NonNull ActionMode mode) {
+        super.onSupportActionModeStarted(mode);
+        fab.hide();
+        actionMode = mode;
+    }
+
+    @Override
+    public void onSupportActionModeFinished(@NonNull ActionMode mode) {
+        super.onSupportActionModeFinished(mode);
+        fab.show();
+        actionMode = null;
     }
 
     @Override
