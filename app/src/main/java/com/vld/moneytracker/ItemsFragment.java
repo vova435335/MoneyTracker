@@ -1,9 +1,6 @@
 package com.vld.moneytracker;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Application;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -155,7 +152,7 @@ public class ItemsFragment extends Fragment {
             if (isInActionMode()) {
                 return;
             }
-            actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(actionModCallback);
+            actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(actionModeCallback);
             toggleSelection(position);
         }
 
@@ -168,18 +165,18 @@ public class ItemsFragment extends Fragment {
         }
     }
 
-    public ActionMode.Callback actionModCallback = new ActionMode.Callback() {
+    public ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             MenuInflater inflater = new MenuInflater(getContext());
             inflater.inflate(R.menu.items_menu, menu);
-            ((MainActivity)getActivity()).setAddButtonVisible(false);
+            ((MainActivity) getActivity()).setAddButtonVisible(false);
             return true;
         }
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false;
+            return true;
         }
 
         @Override
@@ -197,8 +194,8 @@ public class ItemsFragment extends Fragment {
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             adapter.clearSelections();
+            ((MainActivity) getActivity()).setAddButtonVisible(true);
             actionMode = null;
-            ((MainActivity)getActivity()).setAddButtonVisible(true);
         }
     };
 
